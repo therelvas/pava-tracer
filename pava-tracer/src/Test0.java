@@ -1,29 +1,29 @@
 import ist.meic.pa.Trace;
 
-class _Test1 {
-
+class _Test0 {
+	
 	public Object foo() {
 		return new String("Foo");
 	}
-
+	
 	public Object bar() {
-		return foo();
+		return new String("Bar");
 	}
 
-	public Object baz() {
-		return bar();
+	public Object identity(Object o) {
+ 		return o;
 	}
 
 	public void test() {
 		Trace.print(foo());
-		Trace.print(bar());
-		Trace.print(baz());
+		Object b = bar();
+		Trace.print(identity(b));
 	}
 }
 
-public class Test1 {
+public class Test0 {
 
 	public static void main(String args[]) {
-		(new _Test1()).test();
+		(new _Test0()).test();
 	}
 }

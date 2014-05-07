@@ -19,27 +19,23 @@ public class MyTranslator implements Translator {
 
 				public void edit(MethodCall m) throws CannotCompileException {
 
-					String name = null;
 					try {
-						name = m.getMethod().getLongName();
+						String input = m.getMethod().getLongName() + "//" + m.getFileName() + "//" + m.getLineNumber();
+						m.replace("{ ist.meic.pa.Trace.putArgumentTrace($args, " + '"' + input + '"' + "); $_ = $proceed($$); ist.meic.pa.Trace.putReturnTrace(($w)$_, " + '"' + input + '"' + "); } ");
+						
 					} catch (NotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						System.err.println(e.getLocalizedMessage());
 					}
-
-					String input = "<- " + name + " on " + m.getFileName() + ":" + m.getLineNumber();
-					m.replace("{ $_ = $proceed($$); ist.meic.pa.Trace.putTrace($_, $args, " + '"' + input + '"' + "); } ");
 				}
 
-				public void edit(NewExpr e) throws CannotCompileException {			
-					
+				public void edit(NewExpr expr) throws CannotCompileException {			
+
 					try {
-						String name = e.getConstructor().getLongName();
-						String input = "<- " + name + " on " + e.getFileName() + ":" + e.getLineNumber();
-						e.replace("{ $_ = $proceed($$); ist.meic.pa.Trace.putTrace($_, $args, " + '"' + input + '"' + "); } ");
-					
-					} catch (NotFoundException e1) {
-						e1.printStackTrace();
+						String input = expr.getConstructor().getLongName() + "//" + expr.getFileName() + "//" + expr.getLineNumber();
+						expr.replace("{ $_ = $proceed($$); ist.meic.pa.Trace.putReturnTrace($_, " + '"' + input + '"' + "); } ");
+
+					} catch (NotFoundException e) {
+						System.err.println(e.getLocalizedMessage());
 					}
 				}		
 			});

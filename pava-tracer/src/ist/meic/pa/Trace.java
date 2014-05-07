@@ -21,7 +21,7 @@ public class Trace {
 
 	public static void putReturnTrace(Object key, String value) {
 
-		String delims = "[//]";
+		String delims = "[/]";
 		String[] returnString = value.split(delims);
 		String returnDefaultString = String.format("  <- %s on %s:%s", returnString[0], returnString[1], returnString[2]); 
 
@@ -32,7 +32,7 @@ public class Trace {
 
 		if(args.length > 0) {
 			
-			String delims = "[//]";
+			String delims = "[/]";
 			String[] argumentString = value.split(delims);
 			String argumentDefaultString = String.format("  -> %s on %s:%s", argumentString[0], argumentString[1], argumentString[2]);
 

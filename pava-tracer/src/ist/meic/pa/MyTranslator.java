@@ -20,7 +20,7 @@ public class MyTranslator implements Translator {
 				public void edit(MethodCall m) throws CannotCompileException {
 
 					try {
-						String input = m.getMethod().getLongName() + "//" + m.getFileName() + "//" + m.getLineNumber();
+						String input = m.getMethod().getLongName() + "/" + m.getFileName() + "/" + m.getLineNumber();
 						m.replace("{ ist.meic.pa.Trace.putArgumentTrace($args, " + '"' + input + '"' + "); $_ = $proceed($$); ist.meic.pa.Trace.putReturnTrace(($w)$_, " + '"' + input + '"' + "); } ");
 						
 					} catch (NotFoundException e) {
@@ -31,7 +31,7 @@ public class MyTranslator implements Translator {
 				public void edit(NewExpr expr) throws CannotCompileException {			
 
 					try {
-						String input = expr.getConstructor().getLongName() + "//" + expr.getFileName() + "//" + expr.getLineNumber();
+						String input = expr.getConstructor().getLongName() + "/" + expr.getFileName() + "/" + expr.getLineNumber();
 						expr.replace("{ $_ = $proceed($$); ist.meic.pa.Trace.putReturnTrace($_, " + '"' + input + '"' + "); } ");
 
 					} catch (NotFoundException e) {

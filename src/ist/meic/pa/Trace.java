@@ -9,13 +9,15 @@ public class Trace {
 
 	public static void print(Object o) {
 
-		if(traceMap.containsKey(o)) {
-			System.err.println(String.format("Tracing for %s", o.toString()));
-			System.err.println(traceMap.get(o));
-		}
+		if(o != null) {
+			if(traceMap.containsKey(o)) {
+				System.err.println(String.format("Tracing for %s", o.toString()));
+				System.err.println(traceMap.get(o));
+			}
 
-		else {
-			System.err.println(String.format("Tracing for %s is nonexistent!", o.toString()));
+			else {
+				System.err.println(String.format("Tracing for %s is nonexistent!", o.toString()));
+			}
 		}
 	}
 
@@ -31,7 +33,7 @@ public class Trace {
 	public static void putArgumentTrace(Object[] args, String value) {
 
 		if(args.length > 0) {
-			
+
 			String delims = "[/]";
 			String[] argumentString = value.split(delims);
 			String argumentDefaultString = String.format("  -> %s on %s:%s", argumentString[0], argumentString[1], argumentString[2]);
@@ -41,7 +43,34 @@ public class Trace {
 			}	
 		}
 	}
-	
+
+	public static void putExceptionTrace(Object exception, String value) {
+
+		String delims = "[/]";
+		String[] exceptionString = value.split(delims);
+		String exceptionDefaultString = String.format("  Exception %s on %s:%s", exception.toString(), exceptionString[0], exceptionString[1]);
+
+		appendResult(exception, exceptionDefaultString);
+	}
+
+	public static void putFieldTrace(Object fieldObj, String value) {
+
+		String delims = "[/]";
+		String[] fieldString = value.split(delims);
+		String fieldDefaultString = String.format("  Field %s on %s:%s", fieldString[0], fieldString[1], fieldString[2]);
+
+		appendResult(fieldObj, fieldDefaultString);
+	}
+
+	public static void putCastTrace(Object traceObj, String value) {
+
+		String delims = "[/]";
+		String[] fieldString = value.split(delims);
+		String fieldDefaultString = String.format("  Cast to %s on %s:%s", fieldString[0], fieldString[1], fieldString[2]);
+
+		appendResult(traceObj, fieldDefaultString);
+	}
+
 	/**
 	 * Inserts a new value in the traceMap by appending 
 	 * the old value with the new one
@@ -50,7 +79,7 @@ public class Trace {
 	 * @param value The value to be inserted
 	 */
 	private static void appendResult(Object key, String value) {
-		
+
 		if(traceMap.get(key) != null) {			
 			StringBuffer stringBuffer = new StringBuffer(traceMap.get(key));
 			stringBuffer.append("\n" + value);
@@ -60,7 +89,7 @@ public class Trace {
 		else if(key != null){
 			traceMap.put(key, value);
 		}
-		
+
 		else {
 			return;
 		}

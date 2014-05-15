@@ -32,10 +32,10 @@ public class MyTranslator implements Translator {
 
 					try {
 						String input = expr.getConstructor().getLongName() + "/" + expr.getFileName() + "/" + expr.getLineNumber();
-						expr.replace("{ $_ = $proceed($$); ist.meic.pa.Trace.putReturnTrace($_, " + '"' + input + '"' + "); } ");
+						expr.replace("{ $_ = $proceed($$); ist.meic.pa.Trace.putReturnTrace(($w)$_, " + '"' + input + '"' + "); } ");
 
 					} catch (NotFoundException e) {
-						System.err.println(e.getLocalizedMessage());
+						System.err.println(e.getCause() + ": " + e.getLocalizedMessage());
 					}
 				}		
 			});

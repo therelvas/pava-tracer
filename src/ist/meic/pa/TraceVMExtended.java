@@ -20,10 +20,8 @@ public class TraceVMExtended {
 				loader.addTranslator(cp, new MyTranslatorExtended());
 				loader.run(args);
 			} catch (Exception e) {
-				e.printStackTrace();
 				System.err.println(e.getCause() + ": " + e.getLocalizedMessage());
 			} catch (Throwable e) {
-				e.printStackTrace();
 				System.err.println(e.getCause() + ": " + e.getLocalizedMessage());
 			}			
 		}

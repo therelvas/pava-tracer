@@ -18,12 +18,18 @@ public class MyTranslatorExtended implements Translator {
 
 			cc.instrument(new ExprEditor() {
 
+				/**
+				 * Edit implementation for exception handlers
+				 */
 				public void edit(Handler h) throws CannotCompileException {
 
 					String input = h.getFileName() + "/" + h.getLineNumber();
-					h.insertBefore("{ ist.meic.pa.Trace.putExceptionTrace($1," + '"' + input + '"' + "); }");
+					h.insertBefore("{ ist.meic.pa.Trace.putExceptionTrace(($w)$1," + '"' + input + '"' + "); }");
 				}
 
+				/**
+				 * Edit implementation for field access
+				 */
 				public void edit(FieldAccess f) throws CannotCompileException {
 					
 					String input = f.getFieldName() + "/" + f.getFileName() + "/" + f.getLineNumber();
@@ -31,10 +37,13 @@ public class MyTranslatorExtended implements Translator {
 					if(f.isReader()) {
 						f.replace("{ $_ = $proceed($$); ist.meic.pa.Trace.putFieldTrace(($w)$_," + '"' + input + '"' + "); }");
 					} else if(f.isWriter()){
-						f.replace("{  $_ = $proceed($$); ist.meic.pa.Trace.putFieldTrace(($w)$1," + '"' + input + '"' + "); }");
+						f.replace("{ $_ = $proceed($$); ist.meic.pa.Trace.putFieldTrace(($w)$1," + '"' + input + '"' + "); }");
 					} 
 				}		
 
+				/**
+				 * Edit implementation for casted objects
+				 */
 				public void edit(Cast c) throws CannotCompileException {
 
 					try {

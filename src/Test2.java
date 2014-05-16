@@ -4,7 +4,7 @@ import java.util.*;
 
 class _Test2 {
 
-    Map m = new HashMap();
+    Map<Integer, Object> m = new HashMap<Integer, Object>();
 
     public Object identity(Object o) {
         return o;
